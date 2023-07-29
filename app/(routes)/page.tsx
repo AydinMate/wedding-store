@@ -1,12 +1,17 @@
+
+
 import getBillboard from "@/actions/GetBillboard";
 import getProducts from "@/actions/GetProducts";
 import Billboard from "@/components/Billboard";
 import ProductList from "@/components/ProductList";
 import Container from "@/components/ui/Container";
+import { useEventModal } from "@/hooks/useEventModal";
+import { useEffect } from "react";
 
 export const revalidate = 0;
 
 const HomePage = async () => {
+
   const products = await getProducts({ isFeatured: true });
   const billboard = await getBillboard(process.env.MAIN_PAGE_BILLBOARD_ID!);
 
