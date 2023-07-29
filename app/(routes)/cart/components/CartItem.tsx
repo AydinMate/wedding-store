@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 import IconButton from "@/components/ui/IconButton";
 import Currency from "@/components/ui/Currency";
-import useCart from "@/Hooks/useCart";
+import useCart from "@/hooks/useCart";
 import { Product } from "@/types";
 
 interface CartItemProps {

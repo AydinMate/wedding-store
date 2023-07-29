@@ -7,8 +7,8 @@ import { Expand, ShoppingCart } from "lucide-react";
 import Currency from "@/components/ui/Currency";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
-import usePreviewModal from "@/Hooks/usePreviewModal";
-import useCart from "@/Hooks/useCart";
+import usePreviewModal from "@/hooks/usePreviewModal";
+import useCart from "@/hooks/useCart";
 
 interface ProductCardProps {
   data: Product;

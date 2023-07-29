@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 import Button from "@/components/ui/Button";
 import Currency from "@/components/ui/Currency";
-import useCart from "@/Hooks/useCart";
+import useCart from "@/hooks/useCart";
 import { toast } from "react-hot-toast";
 
 const Summary = () => {
