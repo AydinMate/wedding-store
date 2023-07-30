@@ -26,6 +26,7 @@ import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
 import { Switch } from "../ui/switch";
 import { useEvent } from "@/hooks/useEvent";
+import { toast } from "react-hot-toast";
 
 const today = new Date();
 
@@ -49,13 +50,19 @@ export const TrueForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: "" || undefined,
-      date: tomorrow,
+      address: address,
+      date: date,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+   try {
+    setDate(values.date)
+    setAddress(values.address)
+    toast.success("Event successfully updated.")
+   } catch (error) {
+    toast.error("Please contact support.")
+   } 
   };
 
   return (

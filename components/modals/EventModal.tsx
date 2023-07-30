@@ -5,6 +5,7 @@ import { Switch } from "../ui/switch";
 import { TrueForm } from "./TrueForm";
 import { FalseForm } from "./FalseForm";
 import { Modal } from "../ui/Modal";
+import { Label } from "../ui/label";
 
 const today = new Date();
 
@@ -24,7 +25,7 @@ export const EventModal = () => {
 
   return (
     <Modal
-      trigger="Set your event"
+      trigger={isDelivery && address === "" ? "Set your event" : "Update your event"}
       title="Set event details"
       description="Please note that the event's address will only be visible if it falls within our designated serving area. If it does not, we kindly ask you to opt for local pick up instead."
     >
@@ -34,6 +35,7 @@ export const EventModal = () => {
             checked={isDelivery}
             onCheckedChange={(value) => onChangeSwitch(value)}
           />
+          <Label className="ml-3">Delivery?</Label>
           {isDelivery ? <TrueForm /> : <FalseForm />}
         </div>
       </div>

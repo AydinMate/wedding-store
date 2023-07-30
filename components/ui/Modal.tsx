@@ -8,6 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useEvent } from "@/hooks/useEvent";
+import { cn } from "@/lib/utils";
 
 interface ModalProps {
   title: string;
@@ -22,9 +24,18 @@ export const Modal: React.FC<ModalProps> = ({
   trigger,
   children,
 }) => {
+  const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
+    useEvent();
   return (
     <Dialog>
-      <DialogTrigger className="text-red-500 font-bold">{trigger}</DialogTrigger>
+      <DialogTrigger
+        className={cn(
+          isDelivery && address === "" ? "text-red-500" : "text-green-500",
+          "font-bold hover:translate-y-[-2px]"
+        )}
+      >
+        {trigger}
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
