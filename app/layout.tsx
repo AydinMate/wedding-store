@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import ModalProvider from "@/providers/ModalProvider";
 import ToastProvider from "@/providers/ToastProvider";
 import EventModalProvider from "@/providers/EventModalProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const font = Urbanist({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={font.className}>
         <ModalProvider />
         <ToastProvider />
+        <Toaster />
         {/* <EventModalProvider /> */}
         <Navbar />
         {children}
