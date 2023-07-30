@@ -20,7 +20,6 @@ import { cn } from "@/lib/utils";
 import { useEvent } from "@/hooks/useEvent";
 import { toast } from "react-hot-toast";
 
-
 const today = new Date();
 
 const tomorrow = new Date(today);
@@ -44,22 +43,21 @@ export const FalseForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       address: "",
-      date: date
+      date: date,
     },
   });
 
- 
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setDate(values.date)
-      setAddress("")
-      toast.success("Event successfully updated.")
-     } catch (error) {
-      toast.error("Please contact support.")
-     } 
-    };
-
+      if (values.date !== date) {
+        setDate(values.date);
+      }
+      setAddress("");
+      toast.success("Event successfully updated.");
+    } catch (error) {
+      toast.error("Please contact support.");
+    }
+  };
 
   return (
     <Form {...form}>

@@ -9,14 +9,15 @@ import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/usePreviewModal";
 import useCart from "@/hooks/useCart";
+import { useEvent } from "@/hooks/useEvent";
+import { toast } from "react-hot-toast";
 
 interface ProductCardProps {
   data: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
-
-
+  const { isDelivery, address } = useEvent();
   const cart = useCart();
   const previewModal = usePreviewModal();
   const router = useRouter();
@@ -32,8 +33,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
-
-    cart.addItem(data);
+    if (isDelivery && address === "") {
+      toast.error("Please update your event's details first.");
+    } else {
+      event.stopPropagation();
+      cart.addItem(data);
+    }
   };
   return (
     <div

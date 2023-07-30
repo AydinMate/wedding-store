@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Product } from "@/types";
 import Currency from "@/components/ui/Currency";
@@ -6,18 +6,24 @@ import Button from "@/components/ui/ButtonCustom";
 import { ShoppingCart } from "lucide-react";
 import useCart from "@/hooks/useCart";
 import { MouseEventHandler } from "react";
+import { toast } from "react-hot-toast";
+import { useEvent } from "@/hooks/useEvent";
 
 interface InfoProps {
   data: Product;
 }
 
 const Info: React.FC<InfoProps> = ({ data }) => {
-  const cart = useCart()
+  const cart = useCart();
+  const { isDelivery, address } = useEvent();
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
-    event.stopPropagation();
-
-    cart.addItem(data);
+    if (isDelivery && address === "") {
+      toast.error("Please update your event's details first.");
+    } else {
+      event.stopPropagation();
+      cart.addItem(data);
+    }
   };
   return (
     <div>

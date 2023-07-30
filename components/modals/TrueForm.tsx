@@ -56,13 +56,16 @@ export const TrueForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-   try {
-    setDate(values.date)
-    setAddress(values.address)
-    toast.success("Event successfully updated.")
-   } catch (error) {
-    toast.error("Please contact support.")
-   } 
+    try {
+      if (values.date !== date) {
+        setDate(values.date);
+      }
+
+      setAddress(values.address);
+      toast.success("Event successfully updated.");
+    } catch (error) {
+      toast.error("Please contact support.");
+    }
   };
 
   return (

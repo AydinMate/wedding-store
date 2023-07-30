@@ -9,14 +9,20 @@ interface EventState {
   setDate: (date: Date) => void;
 }
 
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
+const today = new Date();
+const dayOfWeek = today.getDay(); // day of week where 0 is Sunday
+const daysUntilNextMonday = ((1 - dayOfWeek) + 7) % 7; // number of days until next Monday
+const daysUntilMondayTwoWeeksFromNow = daysUntilNextMonday + 14; // number of days until Monday two weeks from now
+
+const mondayTwoWeeksFromNow = new Date();
+mondayTwoWeeksFromNow.setDate(today.getDate() + daysUntilMondayTwoWeeksFromNow);
+
 
 export const useEvent = create<EventState>()((set) => ({
   address: "",
   setAddress: (address: string) => set({ address }),
   isDelivery: true,
   setIsDelivery: (isDelivery: boolean) => set({ isDelivery }),
-  date: tomorrow,
+  date: mondayTwoWeeksFromNow,
   setDate: (date: Date) => set({ date }),
 }));
