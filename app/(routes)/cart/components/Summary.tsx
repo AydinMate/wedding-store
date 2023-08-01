@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { AxiosError } from 'axios';
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -36,14 +36,36 @@ const Summary = () => {
   }, 0);
 
   const onCheckout = async () => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-      {
-        productIds: items.map((item) => item.id),
+    
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          productHires: items.map((item) => ({
+            productId: item.id,
+            hireDate: date.toISOString(),
+          })),
+          dropoffAddress: address,
+          isDelivery: isDelivery,
+          hireDate: date.toISOString()
+        }
+      );
+      window.location = response.data.url;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response) {
+        console.log(axiosError.response.data);
+        console.log(axiosError.response.status);
+        console.log(axiosError.response.headers);
+      } else if (axiosError.request) {
+        console.log(axiosError.request);
+      } else {
+        console.log('Error', axiosError.message);
       }
-    );
-    window.location = response.data.url;
+    }
+    
   };
+  
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
