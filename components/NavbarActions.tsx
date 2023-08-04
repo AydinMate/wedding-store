@@ -4,14 +4,11 @@ import Button from "@/components/ui/ButtonCustom";
 import { ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-import { useEventModal } from "@/hooks/useEventModal";
 import { EventModal } from "./modals/EventModal";
 
 const NavbarActions = () => {
   const router = useRouter();
   const cart = useCart();
-  const eventModal = useEventModal();
 
   const [isMounted, setIsMounted] = useState(false);
 

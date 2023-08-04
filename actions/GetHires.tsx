@@ -2,7 +2,7 @@
 import { Product } from "@/types";
 import qs from "query-string";
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
+const URL = `${process.env.NEXT_PUBLIC_API_URL}/hires`;
 
 interface Query {
   categoryId?: string;
