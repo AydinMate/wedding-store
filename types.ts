@@ -22,6 +22,15 @@ export interface Product {
   images: Image[];
 }
 
+export interface ProductHire {
+  id: string;
+  orderId: string;
+  productId: string;
+  storeId: string;
+  hireDate: string;
+  isPaid: boolean;
+}
+
 export interface Image {
   id: string;
   url: string;

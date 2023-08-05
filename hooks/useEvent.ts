@@ -7,6 +7,8 @@ interface EventState {
   setIsDelivery: (isDelivery: boolean) => void;
   date: Date;
   setDate: (date: Date) => void;
+  dateString: string;
+  setDateString: (dateString: string) => void;
 }
 
 const today = new Date();
@@ -17,12 +19,16 @@ const daysUntilMondayTwoWeeksFromNow = daysUntilNextMonday + 14; // number of da
 const mondayTwoWeeksFromNow = new Date();
 mondayTwoWeeksFromNow.setDate(today.getDate() + daysUntilMondayTwoWeeksFromNow);
 
-
-export const useEvent = create<EventState>()((set) => ({
+export const useEvent = create<EventState>((set) => ({
   address: "",
   setAddress: (address: string) => set({ address }),
   isDelivery: true,
   setIsDelivery: (isDelivery: boolean) => set({ isDelivery }),
   date: mondayTwoWeeksFromNow,
-  setDate: (date: Date) => set({ date }),
+  setDate: (date: Date) => {
+    set({ date });
+    set({ dateString: date.toISOString() }); // Update dateString whenever date is updated
+  },
+  dateString: mondayTwoWeeksFromNow.toISOString(), // Initialize dateString with the current date string
+  setDateString: (dateString: string) => set({ dateString }),
 }));

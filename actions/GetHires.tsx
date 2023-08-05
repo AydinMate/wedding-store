@@ -1,30 +1,32 @@
-
-import { Product } from "@/types";
+import {ProductHire } from "@/types";
 import qs from "query-string";
 
 const URL = `${process.env.NEXT_PUBLIC_API_URL}/hires`;
 
 interface Query {
-  categoryId?: string;
-  colourId?: string;
-  sizeId?: string;
-  isFeatured?: boolean;
+  productId?: string;
+  hireDate?: string;
+  isPaid?: boolean;
 }
 
-const getProducts = async (query: Query): Promise<Product[]> => {
+const getHires = async (query: Query): Promise<ProductHire[]> => {
   const url = qs.stringifyUrl({
     url: URL,
     query: {
-      colourId: query.colourId,
-      sizeId: query.sizeId,
-      categoryId: query.categoryId,
-      isFeatured: query.isFeatured,
-      
+      productId: query.productId,
+      hireDate: query.hireDate,
+      isPaid: query.isPaid,
     },
   });
-  const res = await fetch(url);
 
-  return res.json();
+ 
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+
+
+  return data;
 };
 
-export default getProducts;
+export default getHires;
