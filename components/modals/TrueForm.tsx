@@ -62,6 +62,7 @@ export const TrueForm = () => {
       }
 
       setAddress(values.address);
+      
       toast.success("Event successfully updated.");
     } catch (error) {
       toast.error("Please contact support.");

@@ -9,7 +9,7 @@ export const revalidate = 0;
 
 const HomePage = async () => {
   // const { date } = useEvent();
-  const featuredProducts = await getProducts({ isFeatured: true },"2023-08-11T09:00:00.000Z" );
+  const featuredProducts = await getProducts({ isFeatured: true });
   const billboard = await getBillboard(process.env.MAIN_PAGE_BILLBOARD_ID!);
 
   return (

@@ -53,6 +53,7 @@ export const FalseForm = () => {
         setDate(values.date);
       }
       setAddress("");
+      
       toast.success("Event successfully updated.");
     } catch (error) {
       toast.error("Please contact support.");
