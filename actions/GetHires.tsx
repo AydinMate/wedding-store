@@ -5,7 +5,8 @@ const URL = `${process.env.NEXT_PUBLIC_API_URL}/hires`;
 
 interface Query {
   productId?: string;
-  hireDate?: string;
+  startDate?: string;
+  endDate?: string;
   isPaid?: boolean;
 }
 
@@ -14,19 +15,18 @@ const getHires = async (query: Query): Promise<ProductHire[]> => {
     url: URL,
     query: {
       productId: query.productId,
-      hireDate: query.hireDate,
+      startDate: query.startDate,
+      endDate: query.endDate,
       isPaid: query.isPaid,
     },
   });
 
- 
-
   const res = await fetch(url);
   const data = await res.json();
-
-
 
   return data;
 };
 
 export default getHires;
+
+

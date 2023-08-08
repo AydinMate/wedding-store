@@ -15,7 +15,8 @@ interface InfoProps {
 
 const Info: React.FC<InfoProps> = ({ data }) => {
   const cart = useCart();
-  const { isDelivery, address } = useEvent();
+  const { isDelivery, address, dateString } = useEvent();
+  console.log(dateString)
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (isDelivery && address === "") {
