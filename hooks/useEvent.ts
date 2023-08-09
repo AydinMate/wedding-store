@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { utcToZonedTime, format } from 'date-fns-tz';
 
 interface EventState {
   address?: string;
@@ -26,8 +27,10 @@ export const useEvent = create<EventState>((set) => ({
   setIsDelivery: (isDelivery: boolean) => set({ isDelivery }),
   date: mondayTwoWeeksFromNow,
   setDate: (date: Date) => {
+    const melbourneDate = utcToZonedTime(date, 'Australia/Melbourne');
+    const melbourneDateString = format(melbourneDate, "yyyy-MM-dd'T'HH:mm:ssXXX", { timeZone: 'Australia/Melbourne' });
     set({ date });
-    set({ dateString: date.toISOString() }); // Update dateString whenever date is updated
+    set({ dateString: melbourneDateString });
   },
   dateString: mondayTwoWeeksFromNow.toISOString(), // Initialize dateString with the current date string
   setDateString: (dateString: string) => set({ dateString }),

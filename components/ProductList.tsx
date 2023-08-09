@@ -13,7 +13,7 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ title, items }) => {
-  const { dateString } = useEvent();
+  const { date } = useEvent();
   const [hires, setHires] = useState<ProductHire[]>([]);
 
   function getDateRange(dateString: string) {
@@ -38,13 +38,13 @@ const ProductList: React.FC<ProductListProps> = ({ title, items }) => {
 
   useEffect(() => {
     async function fetchHires() {
-      const dateRange = getDateRange(dateString);
+      const dateRange = getDateRange(date.toISOString());
       const hiresData = await getHires({ startDate: dateRange.startDate, endDate: dateRange.endDate, isPaid: true });
       setHires(hiresData);
     }
 
     fetchHires();
-  }, [dateString]);
+  }, [date]);
 
   // Create a set of product IDs from the hires
   const hiredProductIds = new Set(hires.map(hire => hire.productId));
@@ -58,7 +58,6 @@ const ProductList: React.FC<ProductListProps> = ({ title, items }) => {
       {availableProducts.length === 0 && <NoResults />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {availableProducts.map((item) => {
-          console.log(item.id);
           return <ProductCard key={item.id} data={item} />;
         })}
       </div>

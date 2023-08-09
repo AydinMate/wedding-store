@@ -119,7 +119,16 @@ export const TrueForm = () => {
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={field.onChange}
+                      onSelect={(selectedDate) => {
+                        if (selectedDate) {
+                          const utcDate = new Date(Date.UTC(
+                            selectedDate.getFullYear(),
+                            selectedDate.getMonth(),
+                            selectedDate.getDate()
+                          ));
+                          field.onChange(utcDate);
+                        }
+                      }}
                       disabled={(date) =>
                         date < tomorrow || date > eighteenMonthsFromNow
                       }

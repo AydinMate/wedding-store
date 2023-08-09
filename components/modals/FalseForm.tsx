@@ -92,8 +92,18 @@ export const FalseForm = () => {
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
+                      selected={new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())}
+                      onSelect={(selectedDate) => {
+                        if (selectedDate) {
+                          const utcDate = new Date(Date.UTC(
+                            selectedDate.getFullYear(),
+                            selectedDate.getMonth(),
+                            selectedDate.getDate()
+                          ));
+                          field.onChange(utcDate);
+                        }
+                      }}
+                      
                       disabled={(date) =>
                         date < tomorrow || date > eighteenMonthsFromNow
                       }
