@@ -19,6 +19,7 @@ import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
 import { useEvent } from "@/hooks/useEvent";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const today = new Date();
 
@@ -36,6 +37,8 @@ const formSchema = z.object({
 });
 
 export const FalseForm = () => {
+  const router = useRouter();
+
   const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
     useEvent();
 
@@ -53,7 +56,7 @@ export const FalseForm = () => {
         setDate(values.date);
       }
       setAddress("");
-      
+      router.push("/");
       toast.success("Event successfully updated.");
     } catch (error) {
       toast.error("Please contact support.");
@@ -68,7 +71,7 @@ export const FalseForm = () => {
           name="date"
           render={({ field }) => (
             <div className="pt-2">
-             <FormItem className="flex flex-col">
+              <FormItem className="flex flex-col">
                 <FormLabel>Date of event</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -95,11 +98,13 @@ export const FalseForm = () => {
                       selected={field.value}
                       onSelect={(selectedDate) => {
                         if (selectedDate) {
-                          const utcDate = new Date(Date.UTC(
-                            selectedDate.getFullYear(),
-                            selectedDate.getMonth(),
-                            selectedDate.getDate()
-                          ));
+                          const utcDate = new Date(
+                            Date.UTC(
+                              selectedDate.getFullYear(),
+                              selectedDate.getMonth(),
+                              selectedDate.getDate()
+                            )
+                          );
                           field.onChange(utcDate);
                         }
                       }}

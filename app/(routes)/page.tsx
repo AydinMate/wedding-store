@@ -3,7 +3,6 @@ import getProducts from "@/actions/GetProducts";
 import Billboard from "@/components/Billboard";
 import ProductList from "@/components/ProductList";
 import Container from "@/components/ui/Container";
-import { useEvent } from "@/hooks/useEvent";
 
 export const revalidate = 0;
 

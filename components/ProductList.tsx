@@ -65,9 +65,6 @@ const ProductList: React.FC<ProductListProps> = ({ title, items }) => {
     fetchHires();
   }, [date]);
 
-  useEffect(() => {
-    console.log(hires);
-  }, [hires]);
 
   // Create a set of product IDs from the hires
   const hiredProductIds = new Set(hires.map((hire) => hire.productId));
