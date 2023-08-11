@@ -18,39 +18,64 @@ const ProductList: React.FC<ProductListProps> = ({ title, items }) => {
 
   function getDateRange(dateString: string) {
     // Extract the date part of the input string
-    const datePart = dateString.split('T')[0];
-  
+    const datePart = dateString.split("T")[0];
+
     // Split the date part into year, month, and day
-    const [year, month, day] = datePart.split('-').map(Number);
-  
+    const [year, month, day] = datePart.split("-").map(Number);
+
     // Create new Date objects for the start and end of the day in UTC
     const startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
     const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999));
-  
+
     // Return the start and end dates as strings in the same format as the input
     return {
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
     };
   }
-  
-  
 
   useEffect(() => {
     async function fetchHires() {
       const dateRange = getDateRange(date.toISOString());
-      const hiresData = await getHires({ startDate: dateRange.startDate, endDate: dateRange.endDate, isPaid: true });
-      setHires(hiresData);
+
+      // Fetch hires where isPaid is true
+      const paidHires = await getHires({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        isPaid: true,
+      });
+
+      // Fetch hires where isCash is true
+      const cashHires = await getHires({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        isCash: true,
+      });
+      // Combine the results, removing duplicates
+      const combinedHires = paidHires.concat(
+        cashHires.filter(
+          (item) =>
+            !paidHires.some((paidItem) => paidItem.productId === item.productId)
+        )
+      );
+
+      setHires(combinedHires);
     }
 
     fetchHires();
   }, [date]);
 
+  useEffect(() => {
+    console.log(hires);
+  }, [hires]);
+
   // Create a set of product IDs from the hires
-  const hiredProductIds = new Set(hires.map(hire => hire.productId));
+  const hiredProductIds = new Set(hires.map((hire) => hire.productId));
 
   // Filter out the products that are in the set of hired product IDs
-  const availableProducts = items.filter(product => !hiredProductIds.has(product.id));
+  const availableProducts = items.filter(
+    (product) => !hiredProductIds.has(product.id)
+  );
 
   return (
     <div className="space-y-4">

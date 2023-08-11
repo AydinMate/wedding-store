@@ -8,7 +8,9 @@ interface Query {
   startDate?: string;
   endDate?: string;
   isPaid?: boolean;
+  isCash?: boolean;
 }
+
 
 const getHires = async (query: Query): Promise<ProductHire[]> => {
   const url = qs.stringifyUrl({
@@ -18,6 +20,7 @@ const getHires = async (query: Query): Promise<ProductHire[]> => {
       startDate: query.startDate,
       endDate: query.endDate,
       isPaid: query.isPaid,
+      isCash: query.isCash,
     },
   });
 

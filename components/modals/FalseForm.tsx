@@ -68,7 +68,7 @@ export const FalseForm = () => {
           name="date"
           render={({ field }) => (
             <div className="pt-2">
-              <FormItem className="flex flex-col">
+             <FormItem className="flex flex-col">
                 <FormLabel>Date of event</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -92,7 +92,7 @@ export const FalseForm = () => {
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
-                      selected={new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())}
+                      selected={field.value}
                       onSelect={(selectedDate) => {
                         if (selectedDate) {
                           const utcDate = new Date(Date.UTC(
@@ -103,7 +103,6 @@ export const FalseForm = () => {
                           field.onChange(utcDate);
                         }
                       }}
-                      
                       disabled={(date) =>
                         date < tomorrow || date > eighteenMonthsFromNow
                       }
