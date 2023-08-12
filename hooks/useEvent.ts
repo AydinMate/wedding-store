@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { utcToZonedTime, format } from "date-fns-tz";
 
 interface EventState {
-  address?: string;
+  address: string;
   setAddress: (address: string) => void;
   isDelivery: boolean;
   setIsDelivery: (isDelivery: boolean) => void;

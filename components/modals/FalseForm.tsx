@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { useEvent } from "@/hooks/useEvent";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { DialogTrigger } from "../ui/dialog";
 
 const today = new Date();
 
@@ -125,9 +126,11 @@ export const FalseForm = () => {
           )}
         />
         <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-          <Button type="submit" className="bg-black hover:bg-gray-900">
-            Set Event Details
-          </Button>
+          <DialogTrigger>
+            <Button type="submit" className="bg-black hover:bg-gray-900">
+              Set Event Details
+            </Button>
+          </DialogTrigger>
         </div>
       </form>
     </Form>

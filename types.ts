@@ -47,3 +47,7 @@ export interface Colour {
   name: string;
   value: string;
 }
+
+export interface Window {
+  google: any;
+}

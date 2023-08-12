@@ -20,6 +20,11 @@ import { cn } from "@/lib/utils";
 import { useEvent } from "@/hooks/useEvent";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import PlacesAutocomplete from "./PlacesAutocomplete";
+
+import { useLoadScript } from "@react-google-maps/api";
+import { DialogTrigger } from "../ui/dialog";
+import { useEffect, useState } from "react";
 
 const today = new Date();
 
@@ -30,40 +35,53 @@ const eighteenMonthsFromNow = new Date(today);
 eighteenMonthsFromNow.setMonth(today.getMonth() + 18);
 
 const formSchema = z.object({
-  address: z.string().min(1),
+  address: z.any(),
   date: z.date({
     required_error: "An event date is required",
   }),
 });
 
 export const TrueForm = () => {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
     useEvent();
 
+  const [selectedValue, setSelectedValue] = useState(address);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY!,
+    libraries: ["places"],
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: address,
+      address: selectedValue,
       date: date,
     },
   });
 
+  useEffect(() => {
+    sessionStorage.removeItem('upa')
+  }, [])
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      console.log("onSubmit selectedValue: ", selectedValue);
       if (values.date !== date) {
         setDate(values.date);
       }
 
-      setAddress(values.address);
-      router.push("/")
+      setAddress(selectedValue);
+      router.push("/");
       toast.success("Event successfully updated.");
     } catch (error) {
       toast.error("Please contact support.");
     }
   };
+
+  if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <Form {...form}>
@@ -75,10 +93,9 @@ export const TrueForm = () => {
             <FormItem>
               <FormLabel>Event/Dropoff Address</FormLabel>
               <FormControl>
-                <Input
-                  autoComplete="off"
-                  placeholder="Dropoff Address"
-                  {...field}
+                <PlacesAutocomplete
+                  selectedValue={selectedValue}
+                  setSelectedValue={setSelectedValue}
                 />
               </FormControl>
               <FormMessage />
@@ -117,11 +134,13 @@ export const TrueForm = () => {
                       selected={field.value}
                       onSelect={(selectedDate) => {
                         if (selectedDate) {
-                          const utcDate = new Date(Date.UTC(
-                            selectedDate.getFullYear(),
-                            selectedDate.getMonth(),
-                            selectedDate.getDate()
-                          ));
+                          const utcDate = new Date(
+                            Date.UTC(
+                              selectedDate.getFullYear(),
+                              selectedDate.getMonth(),
+                              selectedDate.getDate()
+                            )
+                          );
                           field.onChange(utcDate);
                         }
                       }}
@@ -142,9 +161,11 @@ export const TrueForm = () => {
           )}
         />
         <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-          <Button type="submit" className="bg-black hover:bg-gray-900">
-            Set Event Details
-          </Button>
+          <DialogTrigger>
+            <Button type="submit" className="bg-black hover:bg-gray-900">
+              Set Event Details
+            </Button>
+          </DialogTrigger>
         </div>
       </form>
     </Form>
