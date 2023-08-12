@@ -8,14 +8,8 @@ import { Modal } from "../ui/Modal";
 import { Label } from "../ui/label";
 import useCart from "@/hooks/useCart";
 import { useEffect } from "react";
+import NavEventDetails from "./NavEventDetails";
 
-const today = new Date();
-
-const tomorrow = new Date(today);
-tomorrow.setDate(today.getDate() + 1);
-
-const eighteenMonthsFromNow = new Date(today);
-eighteenMonthsFromNow.setMonth(today.getMonth() + 18);
 
 export const EventModal = () => {
   const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
@@ -31,10 +25,15 @@ export const EventModal = () => {
     setIsDelivery(value);
   };
 
+
   return (
     <Modal
       trigger={
-        isDelivery && address === "" ? "Set your event" : "Update your event"
+        isDelivery && address === "" ? (
+          <span>Set your event</span>
+        ) : (
+          <NavEventDetails />
+        )
       }
       title="Set event details"
       description="Please note that the event's address will only be visible if it falls within our designated serving area. If it does not, we kindly ask you to opt for local pick up instead."

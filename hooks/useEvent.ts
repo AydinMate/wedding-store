@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { utcToZonedTime, format } from 'date-fns-tz';
+import { utcToZonedTime, format } from "date-fns-tz";
 
 interface EventState {
   address?: string;
@@ -13,12 +13,24 @@ interface EventState {
 }
 
 const today = new Date();
-const dayOfWeek = today.getDay(); // day of week where 0 is Sunday
-const daysUntilNextMonday = ((1 - dayOfWeek) + 7) % 7; // number of days until next Monday
-const daysUntilMondayTwoWeeksFromNow = daysUntilNextMonday + 14; // number of days until Monday two weeks from now
 
-const mondayTwoWeeksFromNow = new Date();
-mondayTwoWeeksFromNow.setDate(today.getDate() + daysUntilMondayTwoWeeksFromNow);
+// Get the day of the week in UTC where 0 is Sunday
+const dayOfWeek = today.getUTCDay();
+
+// Calculate the number of days until next Monday in UTC
+const daysUntilNextMonday = (1 - dayOfWeek + 7) % 7;
+
+// Calculate the number of days until Monday two weeks from now in UTC
+const daysUntilMondayTwoWeeksFromNow = daysUntilNextMonday + 14;
+
+// Get the date for Monday two weeks from now in UTC
+const mondayTwoWeeksFromNow = new Date(
+  Date.UTC(
+    today.getUTCFullYear(),
+    today.getUTCMonth(),
+    today.getUTCDate() + daysUntilMondayTwoWeeksFromNow
+  )
+);
 
 export const useEvent = create<EventState>((set) => ({
   address: "",
@@ -27,8 +39,12 @@ export const useEvent = create<EventState>((set) => ({
   setIsDelivery: (isDelivery: boolean) => set({ isDelivery }),
   date: mondayTwoWeeksFromNow,
   setDate: (date: Date) => {
-    const melbourneDate = utcToZonedTime(date, 'Australia/Melbourne');
-    const melbourneDateString = format(melbourneDate, "yyyy-MM-dd'T'HH:mm:ssXXX", { timeZone: 'Australia/Melbourne' });
+    const melbourneDate = utcToZonedTime(date, "Australia/Melbourne");
+    const melbourneDateString = format(
+      melbourneDate,
+      "yyyy-MM-dd'T'HH:mm:ssXXX",
+      { timeZone: "Australia/Melbourne" }
+    );
     set({ date });
     set({ dateString: melbourneDateString });
   },

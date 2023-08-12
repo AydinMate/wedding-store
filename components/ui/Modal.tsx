@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 interface ModalProps {
   title: string;
   description: string;
-  trigger: string;
+  trigger: React.ReactElement;
   children?: React.ReactNode;
 }
 
@@ -31,7 +31,7 @@ export const Modal: React.FC<ModalProps> = ({
       <DialogTrigger
         className={cn(
           isDelivery && address === "" ? "text-red-500" : "text-green-500",
-          "font-bold hover:translate-y-[-2px]"
+          "hover:opacity-80 text-base font-bold"
         )}
       >
         {trigger}
