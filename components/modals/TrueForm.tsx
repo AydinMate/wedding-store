@@ -115,7 +115,7 @@ export const TrueForm = () => {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
+                          "w-[100%] pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -160,9 +160,9 @@ export const TrueForm = () => {
             </div>
           )}
         />
-        <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-          <DialogTrigger>
-            <Button type="submit" className="bg-black hover:bg-gray-900">
+        <div className="pt-6 space-x-2 flex items-center justify-center w-full">
+          <DialogTrigger className="w-[90%]">
+            <Button disabled={selectedValue.length === 0} type="submit" className="bg-black hover:bg-gray-900 w-[90%]">
               Set Event Details
             </Button>
           </DialogTrigger>

@@ -85,13 +85,13 @@ const PlacesAutocomplete: React.FC<PlacesAutocompleteProps> = ({selectedValue, s
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[26rem] justify-between"
+          className="w-[100%] justify-between"
         >
           {selectedValue ? selectedValue : "Event/Dropoff Address..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[26rem] p-0 translate-x-0 translate-y-0">
+      <PopoverContent className="w-[20rem] sm:w-[29rem] p-0 translate-x-0 translate-y-0">
         <Command>
           <CommandInput
             value={value}

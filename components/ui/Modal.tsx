@@ -28,15 +28,10 @@ export const Modal: React.FC<ModalProps> = ({
     useEvent();
   return (
     <Dialog>
-      <DialogTrigger
-        className={cn(
-          isDelivery && address === "" ? "text-red-500" : "text-green-500",
-          "hover:opacity-80 text-base font-bold"
-        )}
-      >
+      <DialogTrigger>
         {trigger}
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-[90%] sm:w-[100%]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

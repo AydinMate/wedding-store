@@ -12,7 +12,6 @@ import NavEventDetails from "./NavEventDetails";
 import { Cog, Settings, Settings2 } from "lucide-react";
 import { Button } from "../ui/button";
 
-
 export const EventModal = () => {
   const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
     useEvent();
@@ -27,14 +26,23 @@ export const EventModal = () => {
     setIsDelivery(value);
   };
 
-
   return (
     <Modal
       trigger={
         isDelivery && address === "" ? (
-          <Button variant={"outline"}><Settings /></Button>
+          <Button
+            className="text-red-500 hover:text-red-500"
+            variant={"outline"}
+          >
+            <Settings />
+          </Button>
         ) : (
-          <Button variant={"outline"}><Settings /></Button>
+          <Button
+            className="text-green-500 hover:text-green-500"
+            variant={"outline"}
+          >
+            <Settings />
+          </Button>
         )
       }
       title="Set event details"

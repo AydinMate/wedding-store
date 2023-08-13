@@ -19,9 +19,7 @@ interface MainNavProps {
   data: Category[];
 }
 
-const SHEET_SIDES = ["top", "right", "bottom", "left"] as const;
 
-type SheetSide = (typeof SHEET_SIDES)[number];
 
 export const revalidate = 0;
 
@@ -44,7 +42,7 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
         <div className="grid grid-cols-2 gap-2 md:hidden lg:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline">
+              <Button className="w-14" variant="outline">
                 <Menu />
               </Button>
             </SheetTrigger>
@@ -66,13 +64,13 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
                 </SheetClose>
                 {routes.map((route) => {
                   return (
-                    <SheetClose asChild>
+                    <SheetClose key={route.href} asChild>
                       <Link
                         className={cn(
                           "text-center text-base font-medium transition-colors hover:text-black",
                           route.active ? "text-black" : "text-neutral-500"
                         )}
-                        key={route.href}
+                        
                         href={route.href}
                       >
                         {route.label}
@@ -81,9 +79,13 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
                   );
                 })}
               </div>
-              <SheetFooter>
+              <SheetFooter className="flex justify-center items-center">
                 <SheetClose asChild>
-                  <Button className="" variant={"link"} type="submit">
+                  <Button
+                    className="w-[30%]"
+                    variant={"secondary"}
+                    type="submit"
+                  >
                     Close
                   </Button>
                 </SheetClose>
