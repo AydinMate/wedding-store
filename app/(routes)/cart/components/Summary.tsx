@@ -1,8 +1,8 @@
 "use client";
 
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import Button from "@/components/ui/ButtonCustom";
 import Currency from "@/components/ui/Currency";
@@ -13,6 +13,7 @@ import { useEvent } from "@/hooks/useEvent";
 import { EventModal } from "@/components/modals/EventModal";
 
 const Summary = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
@@ -20,23 +21,33 @@ const Summary = () => {
   const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
     useEvent();
 
-  useEffect(() => {
-    if (searchParams.get("success")) {
-      toast.success("Payment completed.");
-      removeAll();
-    }
-
-    if (searchParams.get("canceled")) {
-      toast.error("Something went wrong.");
-    }
-  }, [searchParams, removeAll]);
+    useEffect(() => {
+      const handlePayment = async () => {
+        if (searchParams.get("success")) {
+          await router.push("/");
+          await router.refresh();
+          toast.success("Payment completed.");
+  
+          setTimeout(() => {
+            toast.success("An email confirmation has been sent.");
+          }, 3000); 
+        }
+  
+        if (searchParams.get("canceled")) {
+          await router.push("/");
+          await router.refresh();
+          toast.error("Something went wrong.");
+        }
+      };
+  
+      handlePayment();
+    }, [searchParams, removeAll]);
 
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price);
   }, 0);
 
   const onCheckout = async () => {
-    
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
@@ -47,7 +58,7 @@ const Summary = () => {
           })),
           dropoffAddress: address,
           isDelivery: isDelivery,
-          hireDate: date.toISOString()
+          hireDate: date.toISOString(),
         }
       );
       window.location = response.data.url;
@@ -60,12 +71,10 @@ const Summary = () => {
       } else if (axiosError.request) {
         console.log(axiosError.request);
       } else {
-        console.log('Error', axiosError.message);
+        console.log("Error", axiosError.message);
       }
     }
-    
   };
-  
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -80,7 +89,7 @@ const Summary = () => {
         </div>
       </div>
       <Button
-        disabled={items.length === 0 || isDelivery && address === ""}
+        disabled={items.length === 0 || (isDelivery && address === "")}
         onClick={onCheckout}
         className="w-full mt-6"
       >

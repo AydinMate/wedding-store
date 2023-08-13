@@ -50,7 +50,7 @@ function getBounds(center: LatLng, radiusInMeters: number): LatLngBoundsLiteral 
 
 // Usage:
 const centerPoint = { lat: -37.577706570838934, lng: 143.80130135745281 };
-const radius = 5000; // 5 kilometers
+const radius = 10000; // 10 kilometers
 const bounds = getBounds(centerPoint, radius);
 
 const PlacesAutocomplete: React.FC<PlacesAutocompleteProps> = ({selectedValue, setSelectedValue}) => {
