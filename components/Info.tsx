@@ -21,6 +21,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (isDelivery && address === "") {
       toast.error("Please update your event's details first.");
+      window.scrollTo(0, 0);
     } else {
       event.stopPropagation();
       cart.addItem(data);

@@ -35,6 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
     event.stopPropagation();
     if (isDelivery && address === "") {
       toast.error("Please update your event's details first.");
+      window.scrollTo(0, 0);
     } else {
       event.stopPropagation();
       cart.addItem(data);

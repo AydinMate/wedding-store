@@ -9,6 +9,8 @@ import { Label } from "../ui/label";
 import useCart from "@/hooks/useCart";
 import { useEffect } from "react";
 import NavEventDetails from "./NavEventDetails";
+import { Cog, Settings, Settings2 } from "lucide-react";
+import { Button } from "../ui/button";
 
 
 export const EventModal = () => {
@@ -30,9 +32,9 @@ export const EventModal = () => {
     <Modal
       trigger={
         isDelivery && address === "" ? (
-          <span>Set your event</span>
+          <Button variant={"outline"}><Settings /></Button>
         ) : (
-          <NavEventDetails />
+          <Button variant={"outline"}><Settings /></Button>
         )
       }
       title="Set event details"
