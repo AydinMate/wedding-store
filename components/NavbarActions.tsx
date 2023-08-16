@@ -22,6 +22,7 @@ const NavbarActions = () => {
 
   return (
     <div className="ml-auto flex items-center gap-x-4">
+      
       <EventModal />
       <Button
         onClick={() => router.push("/cart")}

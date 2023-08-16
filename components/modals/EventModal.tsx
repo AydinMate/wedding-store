@@ -46,17 +46,17 @@ export const EventModal = () => {
         )
       }
       title="Set event details"
-      description="Please note that the event's address will only be visible if it falls within our designated serving area. If it does not, we kindly ask you to opt for local pick up instead."
+      description={isDelivery ? "Please note that the event's address will only be visible if it falls within our designated serving area. If it does not, we kindly ask you to opt for local pick up instead." : "Local pick up in Ballarat."}
     >
       <div>
-        <div className="space-y-4 py-2 pb-4">
+        <div className="py-2 pb-4 flex flex-row justify-center items-center">
+          <Label className="mr-3">Delivery?</Label>
           <Switch
             checked={isDelivery}
             onCheckedChange={(value) => onChangeSwitch(value)}
           />
-          <Label className="ml-3">Delivery?</Label>
-          {isDelivery ? <TrueForm /> : <FalseForm />}
         </div>
+        <div>{isDelivery ? <TrueForm /> : <FalseForm />}</div>
       </div>
     </Modal>
   );

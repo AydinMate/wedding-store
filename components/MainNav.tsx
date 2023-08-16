@@ -19,8 +19,6 @@ interface MainNavProps {
   data: Category[];
 }
 
-
-
 export const revalidate = 0;
 
 const MainNav: React.FC<MainNavProps> = ({ data }) => {
@@ -70,7 +68,6 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
                           "text-center text-base font-medium transition-colors hover:text-black",
                           route.active ? "text-black" : "text-neutral-500"
                         )}
-                        
                         href={route.href}
                       >
                         {route.label}
@@ -78,6 +75,30 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
                     </SheetClose>
                   );
                 })}
+                <SheetClose asChild>
+                  <Link
+                    className={cn(
+                      "text-center text-base font-medium transition-colors hover:text-black",
+                      pathname === "/about" ? "text-black" : "text-neutral-500"
+                    )}
+                    href={"/about"}
+                  >
+                    {"About"}
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    className={cn(
+                      "text-center text-base font-medium transition-colors hover:text-black",
+                      pathname === "/contact"
+                        ? "text-black"
+                        : "text-neutral-500"
+                    )}
+                    href={"/contact"}
+                  >
+                    {"Contact Us"}
+                  </Link>
+                </SheetClose>
               </div>
               <SheetFooter className="flex justify-center items-center">
                 <SheetClose asChild>
@@ -97,7 +118,7 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
           return (
             <Link
               className={cn(
-                "text-base font-medium transition-colors hover:text-black hidden sm:hidden md:block lg:block",
+                "text-base font-bold transition-colors hover:text-black hidden sm:hidden md:block lg:block",
                 route.active ? "text-black" : "text-neutral-500"
               )}
               key={route.href}
@@ -107,6 +128,25 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
             </Link>
           );
         })}
+
+        <Link
+          className={cn(
+            "text-base font-medium transition-colors hover:text-black hidden sm:hidden md:block lg:block",
+            pathname === "/about" ? "text-black" : "text-neutral-500"
+          )}
+          href={"/about"}
+        >
+          {"About"}
+        </Link>
+        <Link
+          className={cn(
+            "text-base font-medium transition-colors hover:text-black hidden sm:hidden md:block lg:block",
+            pathname === "/contact" ? "text-black" : "text-neutral-500"
+          )}
+          href={"/contact"}
+        >
+          {"Contact Us"}
+        </Link>
       </nav>
     </>
   );

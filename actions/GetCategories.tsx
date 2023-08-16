@@ -7,7 +7,7 @@ const getCategories = async (): Promise<Category[]> => {
   const data = await res.json();
 
   // Convert createdAt strings to Date objects
-  const categories = data.map((category: Category) => ({
+  const categories = await data.map((category: Category) => ({
     ...category,
     createdAt: new Date(category.createdAt),
   }));
