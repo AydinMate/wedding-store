@@ -1,5 +1,7 @@
 import React from "react";
 
+export const revalidate = 0;
+
 const AboutPage = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-10">
