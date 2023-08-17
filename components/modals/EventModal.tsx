@@ -2,18 +2,17 @@
 import { useEvent } from "@/hooks/useEvent";
 
 import { Switch } from "../ui/switch";
-import { TrueForm } from "./TrueForm";
-import { FalseForm } from "./FalseForm";
+import { TrueForm } from "./components/TrueForm";
+import { FalseForm } from "./components/FalseForm";
 import { Modal } from "../ui/Modal";
 import { Label } from "../ui/label";
 import useCart from "@/hooks/useCart";
 import { useEffect } from "react";
-import NavEventDetails from "./NavEventDetails";
-import { Cog, Settings, Settings2 } from "lucide-react";
+import { Settings } from "lucide-react";
 import { Button } from "../ui/button";
 
 export const EventModal = () => {
-  const { address, setAddress, isDelivery, setIsDelivery, date, setDate } =
+  const { address, isDelivery, setIsDelivery, date } =
     useEvent();
 
   const cart = useCart();

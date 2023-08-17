@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import { useEvent } from "@/hooks/useEvent";
 
